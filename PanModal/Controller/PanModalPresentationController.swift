@@ -34,6 +34,14 @@ open class PanModalPresentationController: UIPresentationController {
     }
 
     /**
+     Enum representing dismiss type
+     */
+    public enum DismissType {
+        case tapOutside
+        case swipe
+    }
+
+    /**
      Constants
      */
     struct Constants {
@@ -113,7 +121,7 @@ open class PanModalPresentationController: UIPresentationController {
         }
         view.didTap = { [weak self] _ in
             if self?.presentable?.allowsTapToDismiss == true {
-                self?.dismissPresentedViewController()
+                self?.dismissPresentedViewController(.tapOutside)
             }
         }
         return view
@@ -515,7 +523,7 @@ private extension PanModalPresentationController {
                     transition(to: .shortForm)
 
                 } else {
-                    dismissPresentedViewController()
+                    dismissPresentedViewController(.swipe)
                 }
 
             } else {
@@ -533,7 +541,7 @@ private extension PanModalPresentationController {
                     transition(to: .shortForm)
 
                 } else {
-                    dismissPresentedViewController()
+                    dismissPresentedViewController(.swipe)
                 }
             }
         }
@@ -676,10 +684,10 @@ private extension PanModalPresentationController {
     /**
      Dismiss presented view
      */
-    func dismissPresentedViewController() {
-        presentable?.panModalWillDismiss()
+    func dismissPresentedViewController(_ type: DismissType) {
+        presentable?.panModalWillDismiss(type)
         presentedViewController.dismiss(animated: true) { [weak self] in
-            self?.presentable?.panModalDidDismiss()
+            self?.presentable?.panModalDidDismiss(type)
         }
     }
 }
