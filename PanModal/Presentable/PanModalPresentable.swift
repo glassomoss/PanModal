@@ -225,14 +225,14 @@ public protocol PanModalPresentable: AnyObject {
 
      Default value is an empty implementation.
      */
-    func panModalWillDismiss()
+    func panModalWillDismiss(_ type: PanModalPresentationController.DismissType)
 
     /**
      Notifies the delegate after the pan modal is dismissed.
 
      Default value is an empty implementation.
      */
-    func panModalDidDismiss()
+    func panModalDidDismiss(_ type: PanModalPresentationController.DismissType)
     
     /**
      A flag to determine should we show scroll indicator in normal state for scroll view
