@@ -235,6 +235,20 @@ public protocol PanModalPresentable: AnyObject {
     func panModalDidDismiss(_ type: PanModalPresentationController.DismissType)
     
     /**
+     Notifies the delegate it can adjust presentation animation of controller. Two closures are called before and inside animation block, and the latter in completion.
+     
+     Default value is nil.
+     */
+    func panModalPresentationAnimation(with context: UIViewControllerContextTransitioning) -> AnimationBlock?
+
+    /**
+     Notifies the delegate it can adjust dismissal animation of controller. Two closures are called before and inside animation block, and the latter in completion.
+     
+     Default value is nil.
+     */
+    func panModalDismissalAnimation(with context: UIViewControllerContextTransitioning) -> AnimationBlock?
+
+    /**
      A flag to determine should we show scroll indicator in normal state for scroll view
 
      Default value is true.

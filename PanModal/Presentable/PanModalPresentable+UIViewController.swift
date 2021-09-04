@@ -58,6 +58,14 @@ public extension PanModalPresentable where Self: UIViewController {
     func panModalAnimate(_ animationBlock: @escaping AnimationBlockType, _ completion: AnimationCompletionType? = nil) {
         PanModalAnimator.animate(animationBlock, config: self, completion)
     }
+    
+    func panModalPresentationAnimation(with context: UIViewControllerContextTransitioning) -> AnimationBlock? {
+        return nil
+    }
+    
+    func panModalDismissalAnimation(with context: UIViewControllerContextTransitioning) -> AnimationBlock? {
+        return nil
+    }
 
 }
 #endif

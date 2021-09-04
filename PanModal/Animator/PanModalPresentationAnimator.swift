@@ -79,20 +79,30 @@ public class PanModalPresentationAnimator: NSObject {
 
         // Use panView as presentingView if it already exists within the containerView
         let panView: UIView = transitionContext.containerView.panContainerView ?? toVC.view
-
+        
         // Move presented view offscreen (from the bottom)
         panView.frame = transitionContext.finalFrame(for: toVC)
         panView.frame.origin.y = transitionContext.containerView.frame.height
+        
+        let dimmedView = (toVC.presentationController as? PanModalPresentationController)?.backgroundView
+        dimmedView?.alpha = 0
 
         // Haptic feedback
         if presentable?.isHapticFeedbackEnabled == true {
             feedbackGenerator?.selectionChanged()
         }
+        
+        let animation = presentable?.panModalPresentationAnimation(with: transitionContext)
 
+        animation?.animationSetup?()
+        
         PanModalAnimator.animate({
             panView.frame.origin.y = yPos
+            dimmedView?.alpha = 1
+            animation?.animation?()
         }, config: presentable) { [weak self] didComplete in
             // Calls viewDidAppear and viewDidDisappear
+            animation?.completion?(didComplete)
             fromVC.endAppearanceTransition()
             transitionContext.completeTransition(didComplete)
             self?.feedbackGenerator = nil
@@ -114,10 +124,15 @@ public class PanModalPresentationAnimator: NSObject {
         
         let presentable = panModalLayoutType(from: transitionContext)
         let panView: UIView = transitionContext.containerView.panContainerView ?? fromVC.view
-
+        
+        let animation = presentable?.panModalDismissalAnimation(with: transitionContext)
+        animation?.animationSetup?()
+        
         PanModalAnimator.animate({
             panView.frame.origin.y = transitionContext.containerView.frame.height
+            animation?.animation?()
         }, config: presentable) { didComplete in
+            animation?.completion?(didComplete)
             fromVC.view.removeFromSuperview()
             // Calls viewDidAppear and viewDidDisappear
             toVC.endAppearanceTransition()
