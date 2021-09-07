@@ -93,8 +93,6 @@ public class PanModalPresentationAnimator: NSObject {
         }
         
         let animation = presentable?.panModalPresentationAnimation(with: transitionContext)
-
-        animation?.animationSetup?()
         
         PanModalAnimator.animate({
             panView.frame.origin.y = yPos
@@ -126,7 +124,6 @@ public class PanModalPresentationAnimator: NSObject {
         let panView: UIView = transitionContext.containerView.panContainerView ?? fromVC.view
         
         let animation = presentable?.panModalDismissalAnimation(with: transitionContext)
-        animation?.animationSetup?()
         
         PanModalAnimator.animate({
             panView.frame.origin.y = transitionContext.containerView.frame.height

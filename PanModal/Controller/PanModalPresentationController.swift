@@ -665,7 +665,10 @@ private extension PanModalPresentationController {
          Once presentedView is translated below shortForm, calculate yPos relative to bottom of screen
          and apply percentage to backgroundView alpha
          */
-        backgroundView.dimState = .percent(1.0 - (yDisplacementFromShortForm / presentedView.frame.height))
+        let progressUnbound = 1.0 - (yDisplacementFromShortForm / presentedView.frame.height)
+        let progress = min(max(0, progressUnbound), 1)
+        
+        backgroundView.dimState = .percent(progress)
     }
 
     /**

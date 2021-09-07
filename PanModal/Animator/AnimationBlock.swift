@@ -12,11 +12,6 @@ import Foundation
 public struct AnimationBlock {
     
     /**
-     A closure to execute before animation.
-     */
-    public var animationSetup: (() -> Void)?
-    
-    /**
      A closure to execute inside the animation block.
      */
     public var animation: (() -> Void)?
