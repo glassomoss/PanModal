@@ -112,7 +112,7 @@ open class PanModalPresentationController: UIPresentationController {
     /**
      Background view used as an overlay over the presenting view
      */
-    public lazy var backgroundView: DimmedView = {
+    lazy var backgroundView: DimmedView = {
         let view: DimmedView
         if let color = presentable?.panModalBackgroundColor {
             view = DimmedView(dimColor: color)
